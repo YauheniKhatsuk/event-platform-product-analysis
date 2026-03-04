@@ -1,1 +1,146 @@
+# 📊 Data Description — Yandex Afisha Product Analytics Project
 
+## 📌 Overview
+
+The dataset contains information about ticket bookings made through the Yandex Afisha service from **June 1 to October 31, 2024**.
+
+The data includes information about:
+- Orders
+- Users
+- Events
+- Venues
+- Regions
+- Currency exchange rates
+
+The goal of the dataset is to analyze revenue dynamics, user behavior, seasonal trends, device usage patterns, and regional performance.
+
+---
+
+# 🗂 Datasets Used
+
+The project uses three datasets.
+
+---
+
+## 1️⃣ final_tickets_orders_df.csv
+
+Contains information about all ticket orders placed via mobile and desktop devices.
+
+### Key Columns:
+
+| Column | Description |
+|--------|------------|
+| order_id | Unique order identifier |
+| user_id | Unique user identifier |
+| created_dt_msk | Order creation date (Moscow time) |
+| created_ts_msk | Order creation timestamp (Moscow time) |
+| event_id | Event identifier |
+| cinema_circuit | Cinema network (if applicable) |
+| age_limit | Age restriction of the event |
+| currency_code | Payment currency (RUB, KZT) |
+| device_type_canonical | Device type (mobile / desktop) |
+| revenue | Revenue from the order |
+| service_name | Ticket operator |
+| tickets_count | Number of tickets in the order |
+| total | Total order amount |
+| days_since_prev | Days since previous purchase (NaN for first purchase) |
+
+### Notes:
+- Orders were made from two device types: mobile and desktop.
+- Revenue may be in different currencies.
+- `days_since_prev` contains missing values for first-time buyers.
+
+---
+
+## 2️⃣ final_tickets_events_df.csv
+
+Contains event-related information.
+
+### Key Columns:
+
+| Column | Description |
+|--------|------------|
+| event_id | Unique event identifier |
+| event_name | Event name |
+| event_type_description | Detailed event type |
+| event_type_main | Main event category (concert, theater, sports, etc.) |
+| organizers | Event organizers |
+| region_name | Region name |
+| city_name | City name |
+| venue_id | Venue identifier |
+| venue_name | Venue name |
+| venue_address | Venue address |
+
+### Notes:
+- Used to enrich order data with regional and event-level attributes.
+- Allows segmentation by event type and geography.
+
+---
+
+## 3️⃣ final_tickets_tenge_df.csv
+
+Contains currency exchange rate data for 2024.
+
+### Key Columns:
+
+| Column | Description |
+|--------|------------|
+| nominal | Nominal value (100 KZT) |
+| data | Date |
+| curs | Exchange rate to RUB |
+| cdx | Currency code (KZT) |
+
+### Notes:
+- Exchange rate values are provided per 100 KZT.
+- Used to convert all revenue to RUB for consistency.
+
+---
+
+# 🔄 Data Integration
+
+The datasets were merged using:
+
+- `event_id` → to join orders with event metadata.
+- `created_dt_msk` → to align exchange rates by date.
+- Currency conversion applied to KZT orders.
+
+All revenue values were converted to RUB to ensure comparability across orders.
+
+---
+
+# 🧹 Data Quality Considerations
+
+- Missing values are present only in `days_since_prev` (expected behavior).
+- No critical missing values detected in event dataset.
+- Revenue distributions are right-skewed.
+- Outliers handled using 99th percentile trimming.
+- Duplicate orders checked (both explicit and implicit duplicates).
+
+---
+
+# 📈 Data Scope
+
+- Period: June 1 – October 31, 2024
+- Device types: Mobile and Desktop
+- Event categories: Concerts, Theater, Sports, Shows, etc.
+- Regions: Multiple regional segments included
+- Currency: RUB and KZT (converted to RUB)
+
+---
+
+# 🎯 Analytical Potential
+
+The dataset allows analysis of:
+
+- Revenue trends
+- Seasonality patterns
+- Device-based behavior differences
+- User activity frequency
+- Regional performance
+- Event popularity
+- Ticket pricing dynamics
+- Hypothesis testing on user behavior
+
+---
+
+*End of Data Description*
