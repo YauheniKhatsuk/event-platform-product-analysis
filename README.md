@@ -1,134 +1,183 @@
 # event-platform-product-analysis
 
-## 📌 Project Overview
-
-This project was completed as a final assignment for the Data Analyst program.  
-The goal was to solve real product analytics tasks for the Yandex Afisha service.
-
-The project consists of two main parts:
-
-1. SQL-based product analytics and dashboard development in Yandex DataLens
-2. Exploratory Data Analysis and hypothesis testing using Python
+**Author:** Yauheni Khatsuk  
+**Period analyzed:** 1 June — 31 October 2024  
+**Stack:** SQL • Yandex DataLens • Python (Pandas, NumPy, Matplotlib, SciPy)  
 
 ---
 
-## 📊 Business Context
+# 📌 Project Overview
 
-Yandex Afisha is an event ticketing platform.  
-The product team requested an analysis of user behavior, revenue metrics, and event performance across regions.
+This project represents a full end-to-end product analytics workflow for an online ticket booking service (Yandex Afisha).
 
-The objectives were:
+The analysis includes:
 
+- SQL-based product metrics calculation  
+- Interactive dashboard creation in Yandex DataLens  
+- Exploratory Data Analysis (EDA) in Python  
+- Hypothesis testing  
+- Business recommendations  
+
+The goal of the project is to analyze ticket sales dynamics, user behavior, seasonal trends, and device usage patterns.
+
+---
+
+# 🧮 Part 1 — SQL Analysis
+
+## 🎯 Objectives
 - Calculate key product metrics
 - Analyze revenue structure
-- Explore user purchasing behavior
-- Test product hypotheses using statistical methods
-- Build an analytical dashboard
+- Segment users and orders
+- Prepare aggregated datasets for dashboard
 
----
-
-## 🗄 Database Structure
-
-The analysis is based on the `afisha` database schema containing five tables:
-
-- `purchases` — ticket orders
-- `events` — event information
-- `venues` — event venues
-- `city` — cities
-- `regions` — regions
-
-Main metrics were calculated using SQL.
-
----
-
-# Part 1 — SQL Analytics & Dashboard
-
-## Key Metrics Calculated
-
-- Gross Revenue
-- Average Order Value (AOV)
-- Average Tickets per Order
+## 📊 Key Metrics
+- Total Revenue
+- Total Orders
+- Unique Users
+- Average Order Revenue (AOV)
+- Orders by Device Type
 - Revenue by Event Type
 - Revenue by Region
-- Device Distribution
-- Age Limit Distribution
-- Cinema vs Non-Cinema Orders
+- Seasonal trends
 
-## Dashboard
+## 🛠 Key Techniques
+- JOINs between purchases and events tables
+- Aggregations (SUM, COUNT, AVG)
+- Window functions
+- Grouping by time periods
+- Data segmentation
 
-An analytical dashboard was built in Yandex DataLens including:
-
-- Revenue trends
-- Regional performance
-- Event type analysis
-- Device analysis
-- User behavior insights
 
 ---
 
-# Part 2 — Exploratory Data Analysis (Python)
+# 📊 Part 2 — Dashboard (Yandex DataLens)
 
-## Tools Used
+An interactive dashboard was built to visualize product performance.
 
-- pandas
-- numpy
-- matplotlib
-- seaborn
-- scipy
+## Dashboard Includes
 
-## Analysis Performed
+### 1️⃣ Key Metrics Block
+- Revenue
+- Orders
+- Unique Users
+- Average Order Value
 
-- Data cleaning
-- Distribution analysis
-- Outlier detection
-- Revenue segmentation
-- Device behavior comparison
-- Regional comparison
+### 2️⃣ Revenue Dynamics
+- Weekly revenue trend
+- Orders trend
+- Average revenue trend
 
----
+### 3️⃣ Revenue Structure
+- By device type (mobile vs desktop)
+- By event type
 
-## Hypothesis Testing
+### 4️⃣ Top Segments
+- Regions
+- Events
+- Venues
+- Partners
 
-Examples of tested hypotheses:
+### 5️⃣ Filters
+- Date range
+- Currency
+- Region
+- Event type
 
-1. Mobile users generate lower average order value than desktop users.
-2. Cinema events have higher ticket volume per order.
-3. Certain event types generate significantly higher revenue.
+Dashboard description:
 
-Statistical methods used:
-
-- t-test
-- Mann–Whitney U test
-- Confidence intervals
-
----
-
-## 📈 Key Insights
-
-- Revenue is concentrated in several major regions.
-- Mobile dominates in number of orders but not always in AOV.
-- Concerts and theatre events generate the largest share of revenue.
-- Cinema orders have higher ticket count but lower average check.
 
 ---
 
-## 🛠 Tech Stack
+# 🐍 Part 3 — Python Analysis (EDA & Hypothesis Testing)
 
-- SQL
-- Yandex DataLens
-- Python
-- pandas
-- matplotlib
-- scipy
+Notebook: final_analysis.ipynb
 
 ---
 
-## 🚀 Conclusion
+## 🔎 Data Description
 
-The project demonstrates full-cycle product analytics:
+Three datasets were used:
 
-- SQL metric calculation
-- Dashboard creation
-- Exploratory data analysis
-- Statistical hypothesis testing
-- Business insight generation
+1. `final_tickets_orders_df.csv`
+2. `final_tickets_events_df.csv`
+3. `final_tickets_tenge_df.csv` (currency conversion)
+
+Revenue values were converted to RUB for consistency.
+
+---
+
+## 🧹 Data Preprocessing
+
+- Datetime conversion
+- Categorical feature optimization
+- Outlier detection (99th percentile trimming)
+- Currency conversion (KZT → RUB)
+- Duplicate analysis
+- Feature engineering:
+  - `season`
+  - `month`
+  - `revenue_rub`
+  - `one_ticket_revenue_rub`
+
+---
+
+## 📈 Exploratory Data Analysis
+
+Key findings:
+
+- Revenue distribution is heavily right-skewed.
+- Summer → concerts dominate.
+- Autumn → theater and sports events dominate.
+- Average ticket price slightly higher in summer.
+- Weekdays generate more orders than weekends.
+- Mobile users generate more orders than desktop users.
+
+---
+
+# 🧪 Hypothesis Testing
+
+## Hypothesis 1  
+**H0:** Average orders per user are equal for mobile and desktop.  
+**H1:** Mobile users have higher average orders.
+
+Result: H0 rejected ✅  
+Mobile users are more active.
+
+---
+
+## Hypothesis 2  
+**H0:** Time between orders is equal across devices.  
+**H1:** Mobile users have longer intervals.
+
+Result: H0 rejected ✅  
+Mobile users place orders more actively but with longer intervals.
+
+---
+
+# 💡 Business Recommendations
+
+## 📌 Seasonal Strategy
+- Promote concerts in summer.
+- Increase marketing for theater & sports in autumn.
+
+## 📌 Device Strategy
+- Focus on mobile-first campaigns.
+- Improve desktop conversion funnel.
+
+## 📌 Regional Focus
+- Strengthen marketing in top-performing regions.
+- Activate less engaged regions.
+
+## 📌 Partner Optimization
+- Strengthen cooperation with top ticket operators.
+- Evaluate underperforming partners.
+
+---
+
+# 🚀 How to Run the Project
+
+## Clone repository
+
+```bash
+git clone https://github.com/YauheniKhatsuk/event-platform-product-analysis
+
