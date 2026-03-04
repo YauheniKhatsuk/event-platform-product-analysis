@@ -1,0 +1,110 @@
+# Exploratory Data Analysis & Hypothesis Testing
+
+**Author:** Yauheni Khatsuk  
+**Date:** 18.11.2025  
+
+---
+
+## 1️⃣ Data Description
+The data was loaded correctly.
+
+### Missing Values
+- In `df_orders`, a small number of missing values are present only in the `days_since_prev` column. This is expected for users with their first order.  
+- `df_events` contains no missing values.  
+- The currency rates table (`final_tickets_tenge_df.csv`) has no missing values.
+
+### Preprocessing Steps
+- Converted `created_dt_msk` and `created_ts_msk` to `datetime` format.  
+- Converted categorical columns (`device_type_canonical`, `service_name`, `cinema_circuit`, `region_name`, etc.) to `category` type.  
+- Checked numerical features (`total`, `revenue`, `tickets_count`, `days_since_prev`) for correctness.  
+- Created additional features: day of the week, month, season, week of the year.  
+- In `cinema_circuit`, logically replaced “нет” with “No Network”.  
+- Converted revenue from KZT to RUB.  
+
+### Distribution and Outlier Analysis
+- Revenue (`revenue`) distributions in RUB and KZT are highly right-skewed.  
+- Outliers visible in histograms and boxplots.  
+- Used the 99th percentile to trim extremely high values.  
+- `tickets_count` has few high values; distribution is moderately skewed.  
+
+### Duplicate Analysis
+- No exact duplicates found.  
+- Implicit duplicates detected: rows identical across key fields except for `order_id` and `user_id`.  
+
+### Data Preparation
+- Data was cleaned, merged, and enriched with features:  
+  - `season` — season of purchase  
+  - `revenue_rub` — revenue in RUB  
+  - `one_ticket_revenue_rub` — revenue per ticket  
+- Aggregates computed by user, date, day of the week, device type, and region.
+
+---
+
+## 2️⃣ Main Analysis Results
+
+### Event Popularity and Seasonal Dynamics
+- Summer: users mostly attend concerts.  
+- Autumn: theater and sports events more popular.  
+- Largest seasonal difference in sports events (more viewers in autumn).  
+
+### Device Type and Age Restrictions
+- Distribution of orders by device type is stable across seasons.  
+- Age restriction distribution is stable, no seasonal skew observed.  
+
+### Average Ticket Price
+- Slightly higher in summer than autumn.  
+- Biggest increases in summer observed in theater, “Yolki” (New Year shows), and concerts (10–17% higher than autumn).
+
+### User Activity in Autumn
+- Daily order counts fluctuate between ~1,000 and 7,000.  
+- Active users increased from under 600 in early autumn to 1,300 by late October.  
+- Average orders per day: 2–3, with spikes up to 6–7 at the start of the month.  
+- Average ticket price stable at 180–200 RUB.  
+- By weekday:  
+  - Highest order counts: Tuesday and Thursday; lowest: Monday, Saturday, Sunday.  
+  - DAU peaks on Thursday, lowest on Sunday (4394–4970 users).  
+  - Average orders per user highest on Tuesday (~6.5), lowest on weekends.  
+  - Ticket price stable (186–191 RUB), independent of day of the week.
+
+### Regional and Partner Activity
+- Top regions by unique events: Kamenevsky, Severoyarskaya, Shirokovskaya, Svetopolyansky.  
+- Kamenevsky leads with ~4,000 events (25% of total).  
+- Top partners by order volume: “Bilety bez problem”, “Lovi Bilet!”, “Bilety v Ruki”.  
+- “Bilety bez problem” accounts for 19% of all orders.
+
+---
+
+## 3️⃣ Hypothesis Testing
+
+### Hypothesis 1 — Average Orders per User
+- Mobile app users have a higher average number of orders than desktop users.  
+- Null hypothesis H0 rejected; alternative H1 confirmed.  
+**Conclusion:** Mobile users are more active, likely due to convenience and accessibility.
+
+### Hypothesis 2 — Average Time Between Orders
+- Mobile users have longer average intervals between orders than desktop users.  
+- H0 rejected; H1 confirmed.  
+**Conclusion:** Despite higher order frequency, mobile users place orders at longer intervals, possibly due to seasonality or app usage patterns.
+
+---
+
+## 4️⃣ Recommendations
+
+### Seasonal Focus
+- Increase marketing for theater and sports events in autumn; concerts in summer.
+
+### Partner Optimization
+- Collaboration with top partners (“Bilety bez problem”, “Lovi Bilet!”) generates significant revenue.  
+- Evaluate less active partners to expand reach.
+
+### Regional Strategy
+- Focus on Kamenevsky, Severoyarskaya, and Shirokovskaya regions.  
+- Implement campaigns and promotions in less active regions.
+
+### User Activity & Marketing
+- Weekdays are key for promotions and marketing campaigns.  
+- Segment users by device type and provide targeted offers for mobile users.
+
+---
+
+*End of Report*
